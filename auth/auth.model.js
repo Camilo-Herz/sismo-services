@@ -44,6 +44,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
         trim: true
+    },
+    projects: {
+        type: Array,
+        required: true,
     }
 }, {
     timestamps: true // guarda la fecha de creacion y de actualizacion

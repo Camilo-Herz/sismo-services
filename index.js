@@ -6,7 +6,7 @@ const properties = require('./config/properties');
 const webSocket = require('./config/socket');
 const app = require('./config/app')
 
-opc.conectOPC();
+// opc.conectOPC();
 DB();
 
 app.listen(properties.PORT, () => {

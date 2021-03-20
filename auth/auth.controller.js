@@ -13,7 +13,7 @@ exports.createUser = (req, res) => {
             urlRedir: 'login'
         });
     }
-    
+
     const newUser = {
         user: req.body.user,
         email: req.body.email,
@@ -22,7 +22,8 @@ exports.createUser = (req, res) => {
         name: req.body.name,
         lastName: req.body.lastName,
         profilePicture: req.body.profilePicture,
-        tokenGoogle: req.body.tokenGoogle
+        tokenGoogle: req.body.tokenGoogle,
+        projects: []
     }
 
     User.create(newUser, (err, user) => {
@@ -61,7 +62,7 @@ exports.loginUser = (req, res, next) => {
         password: req.body.password
     }
     User.findOne({ user: userData.user }, (err, user) => {
-        if (err) return res.status(500).send('Error de servidro');
+        if (err) return res.status(500).send('Error de servidor');
         if (!user) {
             return res.status(203).send({
                 status: 2,
@@ -80,10 +81,14 @@ exports.loginUser = (req, res, next) => {
                 const dataUser = {
                     status: 1,
                     urlRedir: 'dashboard',
-                    name: req.body.name,
-                    email: req.body.email,
                     accessToken: accessToken,
-                    expiresIn: expiresIn
+                    payload: {
+                        id: user._id,
+                        name: req.body.name,
+                        email: req.body.email,
+                        projects: user.projects,
+                        expiresIn: expiresIn
+                    }
                 }
                 res.send(dataUser);
             } else {
