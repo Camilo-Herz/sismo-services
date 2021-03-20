@@ -4,5 +4,5 @@ const createProject = require('../createNewProject/newProject.controller');
 module.exports = (router) => {
     router.post('/register', Users.createUser);
     router.post('/login', Users.loginUser);
-    router.put('/newProject/:id', createProject.newProject);
+    router.put('/project/:id', createProject.editProject);
 }
