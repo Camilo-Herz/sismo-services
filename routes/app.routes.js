@@ -1,5 +1,5 @@
 const Users = require('../auth/auth.controller');
-const createProject = require('../createNewProject/newProject.controller');
+const createProject = require('../editProject/editProject.controller');
 
 module.exports = (router) => {
     router.post('/register', Users.createUser);
