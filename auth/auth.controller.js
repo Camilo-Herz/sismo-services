@@ -45,13 +45,18 @@ exports.createUser = (req, res) => {
         const dataUser = {
             status: 1,
             urlRedir: 'dashboard',
-            name: req.body.name,
-            email: req.body.email,
             accessToken: accessToken,
-            expiresIn: expiresIn
+            payload: {
+                id: user._id,
+                projects: user.projects,
+                expiresIn: expiresIn,
+                dataMenu: {
+                    name: (user.name + ' ' + user.lastName),
+                    email: user.email,
+                    profilePicture: user.profilePicture
+                }
+            }
         }
-
-        // response al front end
         res.send(dataUser);
     });
 }
@@ -84,10 +89,13 @@ exports.loginUser = (req, res, next) => {
                     accessToken: accessToken,
                     payload: {
                         id: user._id,
-                        name: req.body.name,
-                        email: req.body.email,
                         projects: user.projects,
-                        expiresIn: expiresIn
+                        expiresIn: expiresIn,
+                        dataMenu: {
+                            name: (user.name + ' ' + user.lastName),
+                            email: user.email,
+                            profilePicture: user.profilePicture
+                        }
                     }
                 }
                 res.send(dataUser);
