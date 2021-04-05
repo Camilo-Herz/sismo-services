@@ -98,6 +98,7 @@ exports.loginUser = (req, res, next) => {
                         }
                     }
                 }
+                session.dataSession(req, dataUser.payload);
                 res.send(dataUser);
             } else {
                 return res.status(203).send({
@@ -110,3 +111,12 @@ exports.loginUser = (req, res, next) => {
         }
     })
 };
+
+var session = {
+    dataSession: async (req, dataUser) => {
+        req.session.userID = dataUser.id;
+        req.session.projects = dataUser.projects;
+        req.session.save();
+        console.log('datos: ', req.session);
+    }
+}
