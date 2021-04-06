@@ -1,7 +1,5 @@
 'use strict'
 
-const session = require('express-session');
-
 const bodyParser = require('body-parser');
 
 // express es el que nos permite trabajar con las peticiones y respuestas http
@@ -12,19 +10,6 @@ const server = require('http').Server(app);
 // Cargar archivos de ruta
 const authRoutes = require('../routes/app.routes');
 const router = express.Router();
-
-// Esto es un middleware -> La función se ejecuta cada vez que la aplicación recibe una solicitud. 
-app.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        path: '/',
-        httpOnly: true,
-        maxAge: 30 * 30000
-    },
-    rolling: true
-}));
 
 // Metodo que se ejecuta antes de la accion de un controlador (middleware)
 app.use(bodyParser.urlencoded({ extended: true }));

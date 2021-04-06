@@ -2,6 +2,7 @@ const User = require('./auth.dao');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const SECRET_KEY = 'llaveSISMO8374';
+const controllerSession = require('../navegate/navegate.controller');
 
 exports.createUser = (req, res) => {
     const domine = req.body.email.split('@');
@@ -98,7 +99,8 @@ exports.loginUser = (req, res, next) => {
                         }
                     }
                 }
-                session.dataSession(req, dataUser.payload);
+                controllerSession.setDataSession('userID', user._id);
+                controllerSession.setDataSession('projects', user.projects);
                 res.send(dataUser);
             } else {
                 return res.status(203).send({
@@ -112,11 +114,11 @@ exports.loginUser = (req, res, next) => {
     })
 };
 
-var session = {
-    dataSession: async (req, dataUser) => {
-        req.session.userID = dataUser.id;
-        req.session.projects = dataUser.projects;
-        req.session.save();
-        console.log('datos: ', req.session);
-    }
-}
+exports.logoutUser = (req, res) => {
+    controllerSession.resetDataSession();
+    return res.status(200).send({
+        status: 1,
+        message: 'Logout exitoso',
+        urlRedir: 'login'
+    });
+};
