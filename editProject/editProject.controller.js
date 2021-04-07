@@ -2,6 +2,8 @@
 
 const User = require('../auth/auth.dao');
 const modelNewProject = require('./editProject.model');
+const controllerSession = require('../navegate/navegate.controller');
+
 
 // Respuestas http
 // https://developer.mozilla.org/es/docs/Web/HTTP/Status
@@ -19,11 +21,12 @@ var controller = {
                         status: 2,
                         message: 'No fue posible eliminar el proyecto',
                         labelBtnDerecha: 'Aceptar',
-                        urlRedir: 'dashboard'
+                        stepId: 'dashboard'
                     });
+                    controllerSession.setDataSession('projects', user.projects);
                     return res.status(200).send({
                         status: 1,
-                        urlRedir: 'dashboard',
+                        stepId: 'dashboard',
                         payload: {
                             projects: user.projects
                         }
@@ -37,11 +40,12 @@ var controller = {
                     status: 2,
                     message: 'No fue posible crear un nuevo proyecto',
                     labelBtnDerecha: 'Aceptar',
-                    urlRedir: 'dashboard'
+                    stepId: 'dashboard'
                 });
+                controllerSession.setDataSession('projects', user.projects);
                 return res.status(200).send({
                     status: 1,
-                    urlRedir: 'dashboard',
+                    stepId: 'dashboard',
                     payload: {
                         projects: user.projects
                     }

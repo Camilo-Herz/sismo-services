@@ -4,7 +4,7 @@ var controller = {
     dataProcess: async (req, res) => {
         const dataUser = {
             status: 1,
-            urlRedir: 'process',
+            stepId: 'process',
             payload: {}
         }
         res.send(dataUser);

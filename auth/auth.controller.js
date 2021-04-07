@@ -11,7 +11,7 @@ exports.createUser = (req, res) => {
             status: 2,
             message: 'El correo ingresado no pertenece al dominio de la universidad.',
             labelBtnDerecha: 'Aceptar',
-            urlRedir: 'login'
+            stepId: 'login'
         });
     }
 
@@ -19,7 +19,6 @@ exports.createUser = (req, res) => {
         user: req.body.user,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password),
-        id: req.body.id,
         name: req.body.name,
         lastName: req.body.lastName,
         profilePicture: req.body.profilePicture,
@@ -33,29 +32,28 @@ exports.createUser = (req, res) => {
                 status: 2,
                 message: 'El correo ingresado ya se encuentra registrado.',
                 labelBtnDerecha: 'Aceptar',
-                urlRedir: 'login'
+                stepId: 'login'
             });
         }
         if (err) return res.status(500).send('Error de servidor');
         const expiresIn = 24 * 60 * 60;
-        const accessToken = jwt.sign({ id: user.id },
+        const accessToken = jwt.sign({
+            id: user._id,
+            name: (user.name + ' ' + user.lastName),
+            email: user.email,
+            profilePicture: user.profilePicture
+        },
             SECRET_KEY, {
             expiresIn: expiresIn
         });
 
         const dataUser = {
             status: 1,
-            urlRedir: 'dashboard',
+            stepId: 'dashboard',
             accessToken: accessToken,
+            expiresIn: expiresIn,
             payload: {
-                id: user._id,
                 projects: user.projects,
-                expiresIn: expiresIn,
-                dataMenu: {
-                    name: (user.name + ' ' + user.lastName),
-                    email: user.email,
-                    profilePicture: user.profilePicture
-                }
             }
         }
         res.send(dataUser);
@@ -74,7 +72,7 @@ exports.loginUser = (req, res, next) => {
                 status: 2,
                 message: 'El usuario no se encuentra registrado',
                 labelBtnDerecha: 'Aceptar',
-                urlRedir: 'login'
+                stepId: 'login'
             });
         } else {
             // comparar las contraseñas
@@ -82,21 +80,21 @@ exports.loginUser = (req, res, next) => {
             // comprobar que coincida con lo que esta en la base de datos
             if (resultPassword) {
                 const expiresIn = 24 * 60 * 60;
-                const accessToken = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: expiresIn });
+                const accessToken = jwt.sign({
+                    id: user._id,
+                    name: (user.name + ' ' + user.lastName),
+                    email: user.email,
+                    profilePicture: user.profilePicture
+                },
+                    SECRET_KEY, { expiresIn: expiresIn });
 
                 const dataUser = {
                     status: 1,
-                    urlRedir: 'dashboard',
+                    stepId: 'dashboard',
                     accessToken: accessToken,
+                    expiresIn: expiresIn,
                     payload: {
-                        id: user._id,
                         projects: user.projects,
-                        expiresIn: expiresIn,
-                        dataMenu: {
-                            name: (user.name + ' ' + user.lastName),
-                            email: user.email,
-                            profilePicture: user.profilePicture
-                        }
                     }
                 }
                 controllerSession.setDataSession('userID', user._id);
@@ -107,7 +105,7 @@ exports.loginUser = (req, res, next) => {
                     status: 2,
                     message: 'Contraseña incorrecta',
                     labelBtnDerecha: 'Aceptar',
-                    urlRedir: 'login'
+                    stepId: 'login'
                 });
             }
         }
@@ -119,6 +117,6 @@ exports.logoutUser = (req, res) => {
     return res.status(200).send({
         status: 1,
         message: 'Logout exitoso',
-        urlRedir: 'login'
+        stepId: 'login'
     });
 };

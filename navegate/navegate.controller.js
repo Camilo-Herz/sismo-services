@@ -5,7 +5,7 @@ exports.pageNavigation = (req, res) => {
         case 'dashboard':
             res.send({
                 status: 1,
-                urlRedir: 'dashboard',
+                stepId: 'dashboard',
                 payload: dataSession
             });
             break;
@@ -15,7 +15,7 @@ exports.pageNavigation = (req, res) => {
                 status: 2,
                 message: 'Error redireccionando',
                 labelBtnDerecha: 'Aceptar',
-                urlRedir: 'login'
+                stepId: 'login'
             });
             break;
     }
