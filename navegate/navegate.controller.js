@@ -9,6 +9,15 @@ exports.pageNavigation = (req, res) => {
                 payload: dataSession
             });
             break;
+        case 'connections':
+            res.send({
+                status: 1,
+                stepId: 'connections',
+                payload: {
+                    projects: dataSession.projects
+                }
+            });
+            break;
 
         default:
             res.status(203).send({

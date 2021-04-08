@@ -4,6 +4,7 @@ const { AttributeIds, OPCUAClient, TimestampsToReturn } = require('node-opcua');
 const controllerOPC = require('./opc.controller');
 const endpointUrl = require('../config/properties').OPC_SERVER;
 const pathNodeId = require('../config/properties').TAG_OPC;
+var topics = [];
 
 exports.conectOPC = async () => {
 
@@ -39,8 +40,7 @@ exports.conectOPC = async () => {
             queueSize: 100 //tamaño de la cola antes de empezar a descartar
         };
 
-        var ids = ["Camilo", "Kevin", "Andres", "Sofia", "Paola"];
-        ids.forEach(async (id) => {
+        topics.forEach(async (id) => {
             // monitoreo de las variables de OPC
             const itemToMonitor = {
                 nodeId: pathNodeId + id, //variabel a monitorear
@@ -56,4 +56,12 @@ exports.conectOPC = async () => {
         console.log("Error" + error);
         process.exit(-1);
     }
+}
+
+exports.setTopics = (topics) => {
+    topics = topics;
+}
+
+exports.resetTopics = () => {
+    topics = [];
 }

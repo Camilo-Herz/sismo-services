@@ -13,7 +13,7 @@ var controller = {
         const id = req.params.id;
         let user = await User.findById(id);
         if (req.body.deleteProject) {
-            const projectRemove = user.projects.find(project => project.nombreProceso === req.body.deleteProject);
+            const projectRemove = user.projects.find(project => project.idProject === req.body.idProject);
             if (projectRemove) {
                 user.projects.pull(projectRemove);
                 await user.save((err, data) => {
