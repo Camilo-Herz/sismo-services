@@ -124,6 +124,7 @@ exports.logoutUser = (req, res) => {
     return res.status(200).send({
         status: 1,
         message: 'Logout exitoso',
-        stepId: 'login'
+        stepId: 'login',
+        payload: {}
     });
 };
