@@ -1,5 +1,7 @@
 'use strict'
 
+var guides = require('../guides/guides.controller');
+
 exports.pageNavigation = (req, res) => {
     switch (req.params.key) {
         case 'dashboard':
@@ -17,6 +19,9 @@ exports.pageNavigation = (req, res) => {
                     projects: dataSession.projects
                 }
             });
+            break;
+        case 'guides':
+            guides.getGuides(req, res);
             break;
 
         default:
