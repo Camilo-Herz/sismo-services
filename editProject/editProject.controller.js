@@ -56,6 +56,29 @@ var controller = {
                     }
                 });
             });
+        } else if (req.body.newTopics) {
+            await User.updateOne({ 'projects.idProject': req.body.idProject }, {
+                '$set': {
+                    'projects.$.topics': req.body.newTopics
+                }
+            }, (err) => {
+                if (err) return res.status(404).send({
+                    status: 2,
+                    message: 'No fue posible editar el topic',
+                    labelBtnDerecha: 'Aceptar',
+                    stepId: 'connections'
+                });
+                const indexProject = user.projects.findIndex((element) => element.idProject === req.body.idProject);
+                user.projects[indexProject].topics = req.body.newTopics;
+                controllerSession.setDataSession('projects', user.projects);
+                return res.status(200).send({
+                    status: 1,
+                    stepId: 'connections',
+                    payload: {
+                        projects: user.projects
+                    }
+                });
+            });
         } else {
             user.projects.push(req.body);
             await user.save((err, data) => {
