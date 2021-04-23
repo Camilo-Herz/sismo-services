@@ -27,12 +27,11 @@ const webSocket = {
                 console.log('datos recibidos: ', res)
 
                 // emitir datos
-                socket.to(nameRoom).emit('event', [
-                    {
-                        name: 'Nuevo participante',
-                        value: "Bienvenido"
-                    }
-                ]);
+                socket.to(nameRoom).emit('event', {
+                    "name": "Germany",
+                    "value": 234
+                }
+                );
                 // socket.emit(nameRoom).emit('event', {datoEmitidoBack: 'toma tus putos datos'}); // emite incluso al usuario que envio desde el front
 
             });
