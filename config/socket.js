@@ -11,6 +11,10 @@ const webSocket = {
     conectionSocket: () => {
         io.on('connection', (socket) => {
 
+            socket.on("disconnect", (reason) => {
+                console.log('cliente desconectado: ', socket.id, 'razon: ', reason);
+            });
+
             // id que se genera cada que se crea una conexion con el front
             const idHandShake = socket.id
 
@@ -36,9 +40,6 @@ const webSocket = {
 
             });
         });
-    },
-    emitSocket: (valueIn, id) => {
-        io.emit('event', { name: id, value: valueIn });
     }
 }
 
