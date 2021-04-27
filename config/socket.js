@@ -33,11 +33,15 @@ const webSocket = {
                 // emitir datos
                 socket.to(nameRoom).emit('event', {
                     "name": "Germany",
-                    "value": 234
+                    "value": Math.random() * (100 - 10) + 10
+                }
+                );
+                socket.to(nameRoom).emit('event', {
+                    "name": "Youn",
+                    "value": Math.random() * (100 - 10) + 10
                 }
                 );
                 // socket.emit(nameRoom).emit('event', {datoEmitidoBack: 'toma tus putos datos'}); // emite incluso al usuario que envio desde el front
-
             });
         });
     }
