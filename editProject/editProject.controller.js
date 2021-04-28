@@ -23,7 +23,7 @@ var controller = {
                         labelBtnDerecha: 'Aceptar',
                         stepId: 'dashboard'
                     });
-                    controllerSession.setDataSession('projects', user.projects);
+                    controllerSession.editDataSession(user._id, user.projects);
                     return res.status(200).send({
                         status: 1,
                         stepId: 'dashboard',
@@ -47,7 +47,7 @@ var controller = {
                 });
                 const indexProject = user.projects.findIndex((element) => element.idProject === req.body.idProject);
                 user.projects[indexProject].endpointOPC = req.body.newEndpoint;
-                controllerSession.setDataSession('projects', user.projects);
+                controllerSession.editDataSession(user._id, user.projects);
                 return res.status(200).send({
                     status: 1,
                     stepId: 'connections',
@@ -70,7 +70,7 @@ var controller = {
                 });
                 const indexProject = user.projects.findIndex((element) => element.idProject === req.body.idProject);
                 user.projects[indexProject].topics = req.body.newTopics;
-                controllerSession.setDataSession('projects', user.projects);
+                controllerSession.editDataSession(user._id, user.projects);
                 return res.status(200).send({
                     status: 1,
                     stepId: 'connections',
@@ -88,7 +88,7 @@ var controller = {
                     labelBtnDerecha: 'Aceptar',
                     stepId: 'dashboard'
                 });
-                controllerSession.setDataSession('projects', user.projects);
+                controllerSession.editDataSession(user._id, user.projects);
                 return res.status(200).send({
                     status: 1,
                     stepId: 'dashboard',
