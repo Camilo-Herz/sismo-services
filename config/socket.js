@@ -31,7 +31,7 @@ const webSocket = {
                 console.log('datos recibidos: ', res)
                 
                 // emitir datos al back local
-                socket.to(undefined).emit('event', {
+                socket.emit(undefined).emit('event', {
                     "name": "Germany",
                     "value": Math.random() * (100 - 10) + 10
                 });
