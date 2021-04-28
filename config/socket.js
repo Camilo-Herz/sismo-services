@@ -29,6 +29,12 @@ const webSocket = {
             socket.on('event', (res) => {
                 const data = res;
                 console.log('datos recibidos: ', res)
+                
+                // emitir datos al back local
+                socket.to(undefined).emit('event', {
+                    "name": "Germany",
+                    "value": Math.random() * (100 - 10) + 10
+                });
 
                 // emitir datos
                 socket.to(nameRoom).emit('event', {
