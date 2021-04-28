@@ -8,7 +8,7 @@ exports.pageNavigation = (req, res) => {
             res.send({
                 status: 1,
                 stepId: 'dashboard',
-                payload: dataSession
+                payload: this.getDataSession(req.params.id)
             });
             break;
         case 'connections':
@@ -16,7 +16,7 @@ exports.pageNavigation = (req, res) => {
                 status: 1,
                 stepId: 'connections',
                 payload: {
-                    projects: dataSession.projects
+                    projects: this.getDataSession(req.params.id).projects
                 }
             });
             break;
@@ -35,12 +35,48 @@ exports.pageNavigation = (req, res) => {
     }
 };
 
-exports.setDataSession = (key, data) => {
-    dataSession[key] = data;
+exports.setDataSession = (data) => {
+    if (dataSession.length === 0) {
+        dataSession.push(data);
+    } else {
+        let auxUser = false;
+        let appearanceIndex;
+        dataSession.forEach((element, index) => {
+            if ((element.userID).toString() === (userID).toString()) {
+                auxUser = true;
+                appearanceIndex = index;
+            }
+        });
+        if (auxUser) {
+            dataSession[appearanceIndex] = auxUser;
+        } else {
+            dataSession.push(data);
+        }
+    }
 }
 
-exports.resetDataSession = () => {
-    dataSession = {};
+exports.editDataSession = (userID, projects) => {
+    dataSession.forEach((element, index) => {
+        if ((element.userID).toString() === (userID).toString()) {
+            dataSession[index].projects = projects;
+        }
+    });
 }
 
-var dataSession = {}
+exports.deleteDataSession = (id) => {
+    let auxUser = [];
+    dataSession.forEach((element, index) => {
+        const x = (element.userID).toString();
+        if ((element.userID).toString() !== id) {
+            auxUser.push(element);
+        }
+    });
+    dataSession = auxUser;
+}
+
+exports.getDataSession = (userID) => {
+    const x = dataSession.find((element) => (element.userID).toString() === userID);
+    return x;
+}
+
+var dataSession = [];

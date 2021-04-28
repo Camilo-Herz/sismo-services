@@ -61,6 +61,7 @@ exports.createUser = (req, res) => {
 }
 
 exports.loginUser = (req, res, next) => {
+    let dataSession = {};
     const userData = {
         user: req.body.user,
         password: req.body.password
@@ -97,8 +98,10 @@ exports.loginUser = (req, res, next) => {
                         projects: user.projects,
                     }
                 }
-                controllerSession.setDataSession('userID', user._id);
-                controllerSession.setDataSession('projects', user.projects);
+
+                dataSession.userID = user._id;
+                dataSession.projects = user.projects;
+                controllerSession.setDataSession(dataSession);
                 res.send(dataUser);
             } else {
                 return res.status(203).send({
@@ -113,7 +116,7 @@ exports.loginUser = (req, res, next) => {
 };
 
 exports.logoutUser = (req, res) => {
-    controllerSession.resetDataSession();
+    controllerSession.deleteDataSession(req.params.id);
     if (req.body.forbidden) {
         return res.status(200).send({
             status: 0,

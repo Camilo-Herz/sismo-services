@@ -7,9 +7,9 @@ const localServices = require('../localService/localService.controller');
 module.exports = (router) => {
     router.post('/register', Users.createUser);
     router.post('/login', Users.loginUser);
-    router.put('/logout', Users.logoutUser);
+    router.put('/logout/:id', Users.logoutUser);
     router.post('/processes', process.dataProcess);
     router.put('/project/:id', createProject.editProject);
-    router.get('/pageNavigation/:key', navegate.pageNavigation);
+    router.get('/pageNavigation/:key/:id', navegate.pageNavigation);
     router.post('/localService', localServices.localService);
 }
