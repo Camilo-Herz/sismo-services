@@ -42,7 +42,7 @@ exports.setDataSession = (data) => {
         let auxUser = false;
         let appearanceIndex;
         dataSession.forEach((element, index) => {
-            if ((element.userID).toString() === (userID).toString()) {
+            if ((element.userID).toString() === (data.userID).toString()) {
                 auxUser = true;
                 appearanceIndex = index;
             }
