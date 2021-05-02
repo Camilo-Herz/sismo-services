@@ -29,26 +29,11 @@ const webSocket = {
 
             // enviar y emitir datos -> recordar que event es el key
             socket.on('event', (res) => {
-                const data = res;
-                console.log('datos recibidos: ', res)
-                
-                // emitir datos al back local
-                socket.emit(undefined).emit('event', {
-                    "name": "Germany",
-                    "value": Math.random() * (100 - 10) + 10
-                });
+                const receivedData = res;
+                console.log('datos recibidos: ', receivedData)
 
                 // emitir datos
-                socket.to(nameRoom).emit('event', {
-                    "name": "Germany",
-                    "value": Math.random() * (100 - 10) + 10
-                }
-                );
-                socket.to(nameRoom).emit('event', {
-                    "name": "Youn",
-                    "value": Math.random() * (100 - 10) + 10
-                }
-                );
+                socket.to(nameRoom).emit('event', receivedData);
                 // socket.emit(nameRoom).emit('event', {datoEmitidoBack: 'toma tus putos datos'}); // emite incluso al usuario que envio desde el front
             });
         });
