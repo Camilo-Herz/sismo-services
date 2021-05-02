@@ -11,7 +11,8 @@ const webSocket = {
     conectionSocket: () => {
         // Register a callback function to run when we have an individual connection
         // This is run for each individual user that connects
-        io.use(function (socket, next) {
+        // io.use(function (socket, next) {
+        io.on('connection', (socket) => {
             socket.on("disconnect", (reason) => {
                 console.log('cliente desconectado: ', socket.id, 'razon: ', reason);
             });
@@ -28,20 +29,11 @@ const webSocket = {
 
             // enviar y emitir datos -> recordar que event es el key
             socket.on('event', (res) => {
-                const data = res;
-                console.log('datos recibidos: ', res)
+                const receivedData = res;
+                console.log('datos recibidos: ', receivedData)
 
                 // emitir datos
-                socket.to(nameRoom).emit('event', {
-                    "name": "Germany",
-                    "value": Math.random() * (100 - 10) + 10
-                }
-                );
-                socket.to(nameRoom).emit('event', {
-                    "name": "Youn",
-                    "value": Math.random() * (100 - 10) + 10
-                }
-                );
+                socket.to(nameRoom).emit('event', receivedData);
                 // socket.emit(nameRoom).emit('event', {datoEmitidoBack: 'toma tus putos datos'}); // emite incluso al usuario que envio desde el front
             });
         });
