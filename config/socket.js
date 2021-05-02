@@ -11,7 +11,8 @@ const webSocket = {
     conectionSocket: () => {
         // Register a callback function to run when we have an individual connection
         // This is run for each individual user that connects
-        io.use(function (socket, next) {
+        // io.use(function (socket, next) {
+        io.on('connection', (socket) => {
             socket.on("disconnect", (reason) => {
                 console.log('cliente desconectado: ', socket.id, 'razon: ', reason);
             });
