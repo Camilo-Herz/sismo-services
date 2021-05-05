@@ -1,7 +1,7 @@
 const server = require('./app');
 const io = require("socket.io")(server, {
     cors: {
-        origin: "http://localhost:4200",
+        origin: ["https://sismoapp.herokuapp.com", "http://localhost:4200", "http://localhost:3700"],
         credentials: true
     }
 });
