@@ -75,7 +75,7 @@ exports.loginUser = (req, res, next) => {
                 labelBtnDerecha: 'Aceptar',
                 stepId: 'login'
             });
-        } else {
+        } else if (userData.password !== null) {
             // comparar las contraseñas
             const resultPassword = bcrypt.compareSync(userData.password, user.password);
             // comprobar que coincida con lo que esta en la base de datos
