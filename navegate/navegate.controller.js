@@ -1,82 +1,45 @@
-'use strict'
-
-var guides = require('../guides/guides.controller');
+const guides = require("../guides/guides.controller");
+const Projects = require("./navigate.dao");
 
 exports.pageNavigation = (req, res) => {
-    switch (req.params.key) {
-        case 'dashboard':
-            res.send({
-                status: 1,
-                stepId: 'dashboard',
-                payload: this.getDataSession(req.params.id)
-            });
-            break;
-        case 'connections':
-            res.send({
-                status: 1,
-                stepId: 'connections',
-                payload: {
-                    projects: this.getDataSession(req.params.id).projects
-                }
-            });
-            break;
-        case 'guides':
-            guides.getGuides(req, res);
-            break;
-
-        default:
-            res.status(203).send({
-                status: 2,
-                message: 'Error redireccionando',
-                labelBtnDerecha: 'Aceptar',
-                stepId: 'login'
-            });
-            break;
-    }
-};
-
-exports.setDataSession = (data) => {
-    if (dataSession.length === 0) {
-        dataSession.push(data);
-    } else {
-        let auxUser = false;
-        let appearanceIndex;
-        dataSession.forEach((element, index) => {
-            if ((element.userID).toString() === (data.userID).toString()) {
-                auxUser = true;
-                appearanceIndex = index;
-            }
-        });
-        if (auxUser) {
-            dataSession[appearanceIndex] = auxUser;
+  const userData = {
+    user: req.params.id,
+  };
+  switch (req.params.key) {
+    case "dashboard":
+    case "connections":
+      Projects.findOne({ _id: userData.user }, (err, user) => {
+        if (err) return res.status(500).send("Error de servidor");
+        if (!user) {
+          return res.status(203).send({
+            status: 2,
+            message: "Nose ha podido acceder a la ruta",
+            labelBtnDerecha: "Aceptar",
+            stepId: "login",
+          });
         } else {
-            dataSession.push(data);
+          return res.send({
+            status: 1,
+            stepId: req.params.key,
+            payload: {
+              projects: user.projects,
+            },
+          });
         }
-    }
-}
+      });
 
-exports.editDataSession = (userID, projects) => {
-    dataSession.forEach((element, index) => {
-        if ((element.userID).toString() === (userID).toString()) {
-            dataSession[index].projects = projects;
-        }
-    });
-}
+      break;
+    case "guides":
+      guides.getGuides(req, res);
+      break;
 
-exports.deleteDataSession = (id) => {
-    let auxUser = [];
-    dataSession.forEach((element, index) => {
-        const x = (element.userID).toString();
-        if ((element.userID).toString() !== id) {
-            auxUser.push(element);
-        }
-    });
-    dataSession = auxUser;
-}
-
-exports.getDataSession = (userID) => {
-    const x = dataSession.find((element) => (element.userID).toString() === userID);
-    return x;
-}
-
-var dataSession = [];
+    default:
+      res.status(203).send({
+        status: 2,
+        message: "Error redireccionando",
+        labelBtnDerecha: "Aceptar",
+        stepId: "login",
+      });
+      break;
+  }
+};
