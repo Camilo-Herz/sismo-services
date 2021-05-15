@@ -32,7 +32,6 @@ var controller = {
             user.projects.push(req.body);
             await user.save((err, data) => {
                 if (err) return res.status(404).send(messagesStore.ERR_NEW_PROJECT);
-                controllerSession.editDataSession(user._id, user.projects);
                 return res.status(200).send({
                     status: 1,
                     stepId: 'dashboard',
@@ -54,7 +53,6 @@ const editTopic = async (user, req, res) => {
         if (err) return res.status(404).send(messagesStore.ERR_EDIT_TOPIC);
         const indexProject = user.projects.findIndex((element) => element.idProject === req.body.idProject);
         user.projects[indexProject].topics = req.body.newTopics;
-        controllerSession.editDataSession(user._id, user.projects);
         return res.status(200).send({
             status: 1,
             stepId: 'connections',
@@ -74,7 +72,6 @@ const editEndpointOPC = async (user, req, res) => {
         if (err) return res.status(404).send(messagesStore.ERR_EDIT_ENDPOINT_OPC);
         const indexProject = user.projects.findIndex((element) => element.idProject === req.body.idProject);
         user.projects[indexProject].endpointOPC = req.body.newEndpoint;
-        controllerSession.editDataSession(user._id, user.projects);
         return res.status(200).send({
             status: 1,
             stepId: 'connections',
@@ -91,7 +88,6 @@ const deleteProject = async (user, req, res) => {
         user.projects.pull(project);
         await user.save((err, data) => {
             if (err) return res.status(404).send(messagesStore.ERR_DELETE_PROJECT);
-            controllerSession.editDataSession(user._id, user.projects);
             return res.status(200).send({
                 status: 1,
                 stepId: 'dashboard',

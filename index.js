@@ -10,4 +10,4 @@ DB();
 app.listen(properties.PORT, () => {
     webSocket.conectionSocket();
     console.log('Servidor corriendo por el puerto:', properties.PORT);
-})
+}) 
