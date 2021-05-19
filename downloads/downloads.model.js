@@ -3,12 +3,12 @@ var Schema = mongoose.Schema;
 mongoose.set('useCreateIndex', true);
 
 const guidesSchema = new Schema({
-    document: {
+    name: {
         type: String,
         required: true,
         trim: true
     },
-    title: {
+    link: {
         type: String,
         required: true,
         trim: true,

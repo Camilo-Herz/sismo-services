@@ -8,7 +8,7 @@ const mail = require('../mailer/mail.controller');
 module.exports = (router) => {
     router.post('/register', Users.createUser);
     router.post('/login', Users.loginUser);
-    router.put('/logout/:id', Users.logoutUser);
+    router.put('/logout', Users.logoutUser);
     router.post('/processes', process.getProcessData);
     router.put('/project/:id', createProject.editProject);
     router.get('/pageNavigation/:key/:id', navegate.pageNavigation);
