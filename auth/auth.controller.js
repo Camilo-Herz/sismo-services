@@ -2,7 +2,6 @@ const User = require('./auth.dao');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const SECRET_KEY = 'llaveSISMO8374';
-const controllerSession = require('../navegate/navegate.controller');
 
 exports.createUser = (req, res) => {
     const domine = req.body.email.split('@');
@@ -84,7 +83,8 @@ exports.loginUser = (req, res, next) => {
                     id: user._id,
                     name: (user.name + ' ' + user.lastName),
                     email: user.email,
-                    profilePicture: user.profilePicture
+                    profilePicture: user.profilePicture,
+                    user: user.user
                 },
                     SECRET_KEY, { expiresIn: expiresIn });
 
