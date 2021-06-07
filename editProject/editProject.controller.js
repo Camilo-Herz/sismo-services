@@ -4,6 +4,7 @@ const User = require('../auth/auth.dao');
 const modelNewProject = require('./editProject.model');
 const controllerSession = require('../navegate/navegate.controller');
 const messagesStore = require('../config/messageStore');
+const bcrypt = require('bcryptjs');
 
 // Respuestas http
 // https://developer.mozilla.org/es/docs/Web/HTTP/Status
@@ -12,7 +13,9 @@ var controller = {
     editProject: async (req, res) => {
         const id = req.params.id;
         let user = await User.findById(id);
-        if (req.body.deleteProject) {
+        if (req.body.editPassword) {
+            changeUser(user, req, res);
+        } else if (req.body.deleteProject) {
             deleteProject(user, req, res);
         } else if (req.body.editEndpointOPC) {
             editEndpointOPC(user, req, res);
@@ -97,6 +100,21 @@ const deleteProject = async (user, req, res) => {
             });
         });
     }
+}
+
+const changeUser = async (user, req, res) => {
+    await User.updateOne({ '_id': user._id }, {
+        '$set': {
+            'password': bcrypt.hashSync(req.body.valueChange),
+        }
+    }, (err) => {
+        if (err) return res.status(404).send(messagesStore.ERR_EDIT_PASSWORD);
+        return res.status(200).send({
+            status: 1,
+            stepId: 'profile',
+            payload: {}
+        });
+    });
 }
 
 module.exports = controller;
