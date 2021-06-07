@@ -17,6 +17,12 @@ module.exports = {
         labelBtnDerecha: 'Aceptar',
         stepId: 'connections'
     },
+    ERR_EDIT_PASSWORD:{
+        status: 2,
+        message: 'No fue posible cambiar la contraseña, por favor intente mas tarde.',
+        labelBtnDerecha: 'Aceptar',
+        stepId: 'profile'
+    },
     ERR_DELETE_PROJECT: {
         status: 2,
         message: 'No fue posible eliminar el proyecto',
