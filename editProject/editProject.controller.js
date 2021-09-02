@@ -103,7 +103,7 @@ const deleteProject = async (user, req, res) => {
 }
 
 const changeUser = async (user, req, res) => {
-    console.log('ingreso a changeUser');
+    console.log('Ejecuto metodo para cambio de clave');
     await User.updateOne({ '_id': user._id }, {
         '$set': {
             'password': bcrypt.hashSync(req.body.valueChange),
