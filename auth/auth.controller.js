@@ -5,7 +5,7 @@ const SECRET_KEY = 'llaveSISMO8374';
 
 exports.createUser = (req, res) => {
     const domine = req.body.email.split('@');
-    if (domine[1] !== 'correo.udistrital.edu.co') {
+    if (domine[1] !== 'correo.udistrital.edu.co' && domine[1] !== 'udistrital.edu.co' ) {
         return res.status(203).send({
             status: 2,
             message: 'El correo ingresado no pertenece al dominio de la universidad.',
