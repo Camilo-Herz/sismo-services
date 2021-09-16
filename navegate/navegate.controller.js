@@ -15,7 +15,7 @@ exports.pageNavigation = (req, res) => {
                 if (!user) {
                     return res.status(203).send({
                         status: 2,
-                        message: "Nose ha podido acceder a la ruta",
+                        message: "No se ha podido acceder a la ruta",
                         labelBtnDerecha: "Aceptar",
                         stepId: "login",
                     });

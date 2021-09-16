@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-const authSchema = require('./processes.model');
+const processesSchema = require('./processes.model');
 
-authSchema.statics = {
+processesSchema.statics = {
     login: function (query, cb) {
         this.find(query, cb);
     }
 }
 
-const authModel = mongoose.model('datasets', authSchema);
+const authModel = mongoose.model('datasets', processesSchema);
 module.exports = authModel;

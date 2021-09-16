@@ -1,8 +1,6 @@
 'use strict'
 
 const User = require('../auth/auth.dao');
-const modelNewProject = require('./editProject.model');
-const controllerSession = require('../navegate/navegate.controller');
 const messagesStore = require('../config/messageStore');
 const bcrypt = require('bcryptjs');
 

@@ -7,7 +7,7 @@ exports.getDownloads = (req, res) => {
         if (!user) {
             return res.status(203).send({
                 status: 2,
-                message: 'Nose ha podido acceder a los manuales',
+                message: 'No se ha podido acceder a los manuales',
                 labelBtnDerecha: 'Aceptar',
                 stepId: 'guides'
             });
