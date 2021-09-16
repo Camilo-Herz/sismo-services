@@ -10,7 +10,7 @@ module.exports = (router) => {
     router.post('/register', Users.createUser);
     router.post('/login', Users.loginUser);
     router.put('/logout', Users.logoutUser);
-    router.put('/recoverPassword', Users.recoverPassword);
+    router.post('/recoverPassword', Users.recoverPassword);
     router.post('/processes', process.getProcessData);
     router.put('/project/:id', createProject.editProject);
     router.get('/pageNavigation/:key/:id', navegate.pageNavigation);
