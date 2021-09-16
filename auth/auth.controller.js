@@ -125,3 +125,19 @@ exports.logoutUser = (req, res) => {
         payload: {}
     });
 };
+
+exports.recoverPassword = (req, res) => {
+    if (req.body.forbidden) {
+        return res.status(200).send({
+            status: 0,
+            message: 'Acceso denegado',
+            stepId: 'forbidden'
+        });
+    }
+    return res.status(200).send({
+        status: 1,
+        message: 'Logout exitoso',
+        stepId: 'login',
+        payload: {}
+    });
+};

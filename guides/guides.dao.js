@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-const authSchema = require('./guides.model');
+const guidesSchema = require('./guides.model');
 
-authSchema.statics = {
+guidesSchema.statics = {
     login: function (query, cb) {
         this.find(query, cb);
     }
 }
 
-const authModel = mongoose.model('guides', authSchema);
+const authModel = mongoose.model('guides', guidesSchema);
 module.exports = authModel;

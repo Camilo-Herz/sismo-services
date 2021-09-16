@@ -28,5 +28,11 @@ module.exports = {
         message: 'No fue posible eliminar el proyecto',
         labelBtnDerecha: 'Aceptar',
         stepId: 'dashboard'
+    },
+    ERR_NEW_ALERT: {
+        status: 2,
+        message: 'No fue posible eliminar almacenar la alerta',
+        labelBtnDerecha: 'Aceptar',
+        stepId: 'login'
     }
 }
