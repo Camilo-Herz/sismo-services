@@ -101,16 +101,16 @@ const deleteProject = async (user, req, res) => {
 }
 
 const changeUser = async (user, req, res) => {
-    console.log('Ejecuto metodo para cambio de clave');
     await User.updateOne({ '_id': user._id }, {
         '$set': {
             'password': bcrypt.hashSync(req.body.valueChange),
         }
     }, (err) => {
         if (err) return res.status(404).send(messagesStore.ERR_EDIT_PASSWORD);
+        const step = (req.body.recoverPassword) ? 'login' : 'profile';
         return res.status(200).send({
             status: 1,
-            stepId: 'profile',
+            stepId: step,
             payload: {}
         });
     });

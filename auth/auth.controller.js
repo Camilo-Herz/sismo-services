@@ -127,17 +127,23 @@ exports.logoutUser = (req, res) => {
 };
 
 exports.recoverPassword = (req, res) => {
-    if (req.body.forbidden) {
-        return res.status(200).send({
-            status: 0,
-            message: 'Acceso denegado',
-            stepId: 'forbidden'
-        });
-    }
-    return res.status(200).send({
-        status: 1,
-        message: 'Logout exitoso',
-        stepId: 'login',
-        payload: {}
-    });
+    User.findOne({ email: req.body.email }, (err, user) => {
+        if (err) return res.status(500).send('Error de servidor');
+        if (!user) {
+            return res.status(203).send({
+                status: 2,
+                message: 'El usuario no se encuentra registrado',
+                labelBtnDerecha: 'Aceptar',
+                stepId: 'login'
+            });
+        } else {
+            res.send({
+                status: 3,
+                stepId: 'login',
+                payload: {
+                    id: user._id
+                }
+            });
+        }
+    })
 };
