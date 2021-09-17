@@ -10,9 +10,9 @@ exports.getNotifications = (req, res) => {
         if (!user) {
             return res.status(203).send({
                 status: 2,
-                message: "No se ha podido acceder a la ruta",
+                message: "No se ha podido mostrar las notificaciones",
                 labelBtnDerecha: "Aceptar",
-                stepId: "login",
+                stepId: "dashboard",
             });
         } else {
             return res.send({
